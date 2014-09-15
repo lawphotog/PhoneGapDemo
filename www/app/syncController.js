@@ -150,8 +150,40 @@
 
     };
 
+    $scope.GetFile = function () {
+
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, 
+            function onFileSystemSuccess(fileSystem) {
+                fileSystem.root.getFile(
+                "dummy.html", {create: true, exclusive: false}, 
+                function gotFileEntry(fileEntry) {
+                    var sPath = fileEntry.fullPath.replace("dummy.html","");
+                    var fileTransfer = new FileTransfer();
+                    fileEntry.remove();
+
+                    toastr.info(sPath);
+
+                    fileTransfer.download(
+                        "http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
+                        sPath + "theFile.pdf",
+                        function(theFile) {
+                            toastr.info("download complete: " + theFile.toURI());
+                            showLink(theFile.toURI());
+                        },
+                        function(error) {
+                            toastr.info("download error source " + error.source);
+                            toastr.info("download error target " + error.target);
+                            toastr.info("upload error code: " + error.code);
+                        }
+                    );
+                }, fail);
+            }, fail);
+    };
 
 }
+
+
+
 
 
 
