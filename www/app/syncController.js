@@ -163,9 +163,11 @@
 
                     toastr.info(sPath);
 
+                    var fileUrl = '//localhost/persistent/path/to/downloads/';
+
                     fileTransfer.download(
                         "http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
-                        fileSystem.root.toURL() + "theFile.pdf",
+                        fileUrl + "theFile.pdf",
                         function(theFile) {
                             toastr.info("download complete: " + theFile.toURI());
                             showLink(theFile.toURI());
