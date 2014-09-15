@@ -159,20 +159,21 @@
                 function gotFileEntry(fileEntry) {
                     var sPath = fileEntry.fullPath.replace("dummy.html","");
                     var fileTransfer = new FileTransfer();
-                    fileEntry.remove();
+                    fileEntry.remove();                                       
 
-                    toastr.info(sPath);
+                    var fileUrl = cordova.file.applicationStorageDirectory;
 
-                    var fileUrl = '//localhost/persistent/path/to/downloads/';
+                    toastr.info(fileUrl);
 
                     fileTransfer.download(
-                        "http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf",
+                        encodeURI("http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf"),
                         fileUrl + "theFile.pdf",
                         function(theFile) {
                             toastr.info("download complete: " + theFile.toURI());
                             showLink(theFile.toURI());
                         },
-                        function(error) {
+                        function (error) {
+                            toastr.info("error " + error);
                             toastr.info("download error source " + error.source);
                             toastr.info("download error target " + error.target);
                             toastr.info("upload error code: " + error.code);
